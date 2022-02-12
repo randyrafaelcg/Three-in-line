@@ -1,4 +1,5 @@
 const tiles = Array.from(document.querySelectorAll(".tile"));
+const button= document.getElementById("reset");
 const board = ["", "", "", "", "", "", "", "", ""];
 
 const winningConditions = [
@@ -13,6 +14,7 @@ const winningConditions = [
 ];
 
 var currentPlayer = "X";
+var hasEnded=false;
 
 tiles.forEach((tile, index) => {
   tile.addEventListener("click", () => userAction(tile,index));
