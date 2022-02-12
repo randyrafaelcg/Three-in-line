@@ -1,6 +1,5 @@
 const tiles = Array.from(document.querySelectorAll(".tile"));
 const button= document.getElementById("reset");
-const board = ["", "", "", "", "", "", "", "", ""];
 
 const winningConditions = [
   [0, 1, 2],
@@ -15,18 +14,37 @@ const winningConditions = [
 
 var currentPlayer = "X";
 var hasEnded=false;
+var board = ["", "", "", "", "", "", "", "", ""];
+
+const restartGame = ()=>{
+  board = ["", "", "", "", "", "", "", "", ""];
+  if(currentPlayer==="O")
+  changePlayer();
+
+  tiles.forEach(tile=>{
+    tile.innerText='';
+  })
+}
+
+const changePlayer=()=>{
+  if(currentPlayer==="X")
+  currentPlayer="O";
+  else
+  currentPlayer="X"
+}
 
 tiles.forEach((tile, index) => {
   tile.addEventListener("click", () => userAction(tile,index));
 });
+
+button.addEventListener("click",()=>restartGame());
 
 function userAction(tile,index) {
   let won=false;
   if (tile.innerText != "X" && tile.innerText != "O") {
     tile.innerText = currentPlayer;
     board[index]=currentPlayer;
-    if (currentPlayer == "X") currentPlayer = "O";
-    else currentPlayer = "X";
+    changePlayer();
   }
   winningConditions.forEach((elem)=>{
     let a=board[elem[0]];
