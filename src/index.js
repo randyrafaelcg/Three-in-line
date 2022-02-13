@@ -1,5 +1,6 @@
 const tiles = Array.from(document.querySelectorAll(".tile"));
-const buttonReset= document.getElementById("reset");
+const buttonReset = document.getElementById("reset");
+const winner = document.querySelector(".winner");
 
 const winningConditions = [
   [0, 1, 2],
@@ -13,66 +14,60 @@ const winningConditions = [
 ];
 
 var currentPlayer = "X";
-var hasEnded=false;
+var hasEnded = false;
 var board = ["", "", "", "", "", "", "", "", ""];
 
-const restartGame = ()=>{
+const restartGame = () => {
   board = ["", "", "", "", "", "", "", "", ""];
-  if(currentPlayer==="O")
-  changePlayer();
+  if (currentPlayer === "O") changePlayer();
+  winner.innerHTML = "";
+  hasEnded=false;
+  tiles.forEach((tile) => {
+    tile.innerText = "";
+  });
+};
 
-  tiles.forEach(tile=>{
-    tile.innerText='';
-  })
-}
+const changePlayer = () => {
+  if (currentPlayer === "X") currentPlayer = "O";
+  else currentPlayer = "X";
+};
 
-const changePlayer=()=>{
-  if(currentPlayer==="X")
-  currentPlayer="O";
-  else
-  currentPlayer="X"
-}
+const isEmpty = (tile) => {
+  if (tile.innerText === "X" || tile.innerText === "O") return false;
+  else return true;
+};
 
-const isEmpty=(tile)=>{
-  if(tile.innerText === "X" && tile.innerText === "O")
-  return false;
-  else
-  return true;
-}
-
-function validateResult(){
-  let won=false;
-  for(let elem of winningConditions){
-    let a=board[elem[0]];
-    let b=board[elem[1]];
-    let c=board[elem[2]];
-    if(a===b && b===c && a!=''){
-      won=true;
+function validateResult() {
+  let won = false;
+  for (let elem of winningConditions) {
+    let a = board[elem[0]];
+    let b = board[elem[1]];
+    let c = board[elem[2]];
+    if (a === b && b === c && a != "") {
+      won = true;
       break;
     }
   }
-
-  if(won){
-    alert("Player "+currentPlayer+" has Won");
-    hasEnded=true;
+  if (won) {
+    winner.innerHTML = "Player " + currentPlayer + " has won";
+    hasEnded = true;
+  }
+  if(!board.includes('')){
+    winner.innerHTML="Tie";
   }
 }
 
-function userAction(tile,index) {
-  
+function userAction(tile, index) {
   if (isEmpty(tile) && !hasEnded) {
     tile.innerText = currentPlayer;
-    board[index]=currentPlayer;
+    board[index] = currentPlayer;
     validateResult();
     changePlayer();
   }
-  
 }
 
 tiles.forEach((tile, index) => {
-  tile.addEventListener("click", () => userAction(tile,index));
+  tile.addEventListener("click", () => userAction(tile, index));
 });
 
-buttonReset.addEventListener("click",restartGame);
-
-
+buttonReset.addEventListener("click", restartGame);
