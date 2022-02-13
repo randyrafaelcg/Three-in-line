@@ -37,7 +37,7 @@ tiles.forEach((tile, index) => {
   tile.addEventListener("click", () => userAction(tile,index));
 });
 
-button.addEventListener("click",()=>restartGame());
+button.addEventListener("click",restartGame);
 
 function userAction(tile,index) {
   let won=false;

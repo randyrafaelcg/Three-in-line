@@ -23,16 +23,17 @@ body {
     color: #E4CFCD;
     margin: auto ;
     margin-top: 2%;
+    margin-bottom: 6%;
     display: grid;
-    grid-template-columns: 33% 35% 33%;
-    grid-template-rows: 40% 40% 40%;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 35% 35% 35%;
     max-width: 500px;
 }
 
 .board > div {
     border: 1px solid #E4CFCD;
-    min-width: 130px;
-    min-height: 130px;
+    min-width: 150px;
+    min-height: 150px;
     margin: auto;
     display: flex;
     justify-content: center;
@@ -44,7 +45,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 12%;
+    margin-top: 2%;
 }
 
 .button {
@@ -55,9 +56,3 @@ body {
   font-size: 16px;
   cursor: pointer;
 }
-
-/*display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1em;*/
