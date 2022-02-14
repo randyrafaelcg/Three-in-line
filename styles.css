@@ -53,14 +53,24 @@ body {
     margin-top: 1%;
 }
 
-.button {
-  background-color: #E58302; /* Green */
+.button{
+    padding: 15px 22px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#clear {
+  background-color: #E58302;
   color: #052679;
-  padding: 15px 32px;
-  text-align: center;
-  font-size: 16px;
   cursor: pointer;
   font-weight:bold;
+}
+
+#reset{
+    background-color: #052679;
+    color: #E58302;
+    cursor: pointer;
+    font-weight:bold; 
 }
 
 .winner{
@@ -85,4 +95,14 @@ body {
 .playerO{
     color: #13AF35;
     font-weight: bold;
+}
+
+.scoreO{
+   padding-left: 5%;
+   font-size: 30px; 
+}
+
+.scoreX{
+    padding-right: 5%;
+    font-size: 30px; 
 }

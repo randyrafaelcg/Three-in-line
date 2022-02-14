@@ -2,6 +2,9 @@ const tiles = Array.from(document.querySelectorAll(".tile"));
 const buttonReset = document.getElementById("reset");
 const winner = document.querySelector(".winner");
 const playerTurn = document.querySelector(".turn-player");
+const scoreO=document.querySelector(".scoreO");
+const scoreX=document.querySelector(".scoreX");
+const buttonClear=document.getElementById("clear");
 
 const winningConditions = [
   [0, 1, 2],
@@ -19,6 +22,12 @@ var hasEnded = false;
 var board = ["", "", "", "", "", "", "", "", "", ""];
 
 const restartGame = () => {
+  clearGame();
+  scoreO.innerText=0;
+  scoreX.innerText=0;
+};
+
+const clearGame=()=>{
   board = ["", "", "", "", "", "", "", "", ""];
   if (currentPlayer === "O") changePlayer();
   winner.innerHTML = "";
@@ -30,7 +39,7 @@ const restartGame = () => {
   });
   winner.classList.remove(`playerO`);
   winner.classList.remove(`playerX`);
-};
+}
 
 const changePlayer = () => {
   playerTurn.classList.remove(`player${currentPlayer}`);
@@ -43,6 +52,19 @@ const isEmpty = (tile) => {
   if (tile.innerText === "X" || tile.innerText === "O") return false;
   else return true;
 };
+
+const updatescore=()=>{
+  let x=parseInt(scoreX.textContent);
+  let o=parseInt(scoreO.textContent);
+  if(currentPlayer==='X'){
+    x++;
+    scoreX.innerText=x;
+  }
+  else{
+    o++;
+    scoreO.innerText=o;
+  }
+}
 
 function validateResult() {
   let won = false;
@@ -62,9 +84,10 @@ function validateResult() {
   if (won) {
     winner.classList.add(`player${currentPlayer}`);
     winner.innerHTML = "Player " + currentPlayer + " has won";
+    updatescore();
     hasEnded = true;
   }
-  if (!board.includes("")) {
+  else if (!board.includes("")) {
     winner.classList.remove(`player${currentPlayer}`);
     winner.innerHTML = "Tie";
   }
@@ -86,3 +109,5 @@ tiles.forEach((tile, index) => {
 });
 
 buttonReset.addEventListener("click", restartGame);
+
+buttonClear.addEventListener("click",clearGame);
