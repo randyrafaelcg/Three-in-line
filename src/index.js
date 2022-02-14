@@ -1,6 +1,7 @@
 const tiles = Array.from(document.querySelectorAll(".tile"));
 const buttonReset = document.getElementById("reset");
 const winner = document.querySelector(".winner");
+const playerTurn = document.querySelector(".turn-player");
 
 const winningConditions = [
   [0, 1, 2],
@@ -15,21 +16,27 @@ const winningConditions = [
 
 var currentPlayer = "X";
 var hasEnded = false;
-var board = ["", "", "", "", "", "", "", "", ""];
+var board = ["", "", "", "", "", "", "", "", "", ""];
 
 const restartGame = () => {
   board = ["", "", "", "", "", "", "", "", ""];
   if (currentPlayer === "O") changePlayer();
   winner.innerHTML = "";
-  hasEnded=false;
+  hasEnded = false;
   tiles.forEach((tile) => {
     tile.innerText = "";
+    tile.classList.remove(`playerX`);
+    tile.classList.remove(`playerO`);
   });
+  winner.classList.remove(`playerO`);
+  winner.classList.remove(`playerX`);
 };
 
 const changePlayer = () => {
-  if (currentPlayer === "X") currentPlayer = "O";
-  else currentPlayer = "X";
+  playerTurn.classList.remove(`player${currentPlayer}`);
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+  playerTurn.classList.add(`player${currentPlayer}`);
+  playerTurn.innerText = currentPlayer;
 };
 
 const isEmpty = (tile) => {
@@ -43,22 +50,30 @@ function validateResult() {
     let a = board[elem[0]];
     let b = board[elem[1]];
     let c = board[elem[2]];
-    if (a === b && b === c && a != "") {
-      won = true;
-      break;
+    if (a === b && b === c) {
+      if (a === "" || b === "" || c === "") {
+        won = false;
+      } else {
+        won = true;
+        break;
+      }
     }
   }
   if (won) {
+    winner.classList.add(`player${currentPlayer}`);
     winner.innerHTML = "Player " + currentPlayer + " has won";
     hasEnded = true;
   }
-  if(!board.includes('')){
-    winner.innerHTML="Tie";
+  if (!board.includes("")) {
+    winner.classList.remove(`player${currentPlayer}`);
+    winner.innerHTML = "Tie";
   }
 }
 
 function userAction(tile, index) {
   if (isEmpty(tile) && !hasEnded) {
+    tile.classList.remove(`player${currentPlayer}`);
+    tile.classList.add(`player${currentPlayer}`);
     tile.innerText = currentPlayer;
     board[index] = currentPlayer;
     validateResult();
