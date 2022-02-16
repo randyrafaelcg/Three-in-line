@@ -5,24 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Three in line</title>
+    <title>Tic Tac Toe</title>
 </head>
 <body>
     <section class="intro">
-        <h1>Three in line</h1>
-        <h3>You need 3 in line to win</h3>
+        <h1>Tic Tac Toe</h1>
+        <h3>You need a full line whith your symbol to win</h3>
     </section>
     <div class="turn">Now is player <span class="turn-player playerX">X</span> turn</div>
-    <section class="board">
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
-        <div class="tile"></div>
+    <section class="board" id="container">
+        
+    </section>
+    <section class="matrixInput">
+        <input type="text" id="matrixSize" placeholder="size" required>
+        <button class="button" id="start">START</button>
     </section>
     <section class="winner"></section>
     <section class="control">
