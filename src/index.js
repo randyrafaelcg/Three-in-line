@@ -25,6 +25,7 @@ var board = ["", "", "", "", "", "", "", "", "", ""];
 var hasStarted = false;
 var tiles;
 var tam;
+var matrix;
 
 const restartGame = () => {
   clearGame();
@@ -38,7 +39,6 @@ const restartGame = () => {
 };
 
 const clearGame = () => {
-  board = ["", "", "", "", "", "", "", "", ""];
   if (currentPlayer === "O") changePlayer();
   winner.innerHTML = "";
   hasEnded = false;
@@ -49,6 +49,11 @@ const clearGame = () => {
   });
   winner.classList.remove(`playerO`);
   winner.classList.remove(`playerX`);
+  for (let i = 0; i < tam; i++) {
+    for (let j = 0; j < tam; j++) {
+      matrix[i][j]="";
+    }
+  }
 };
 
 const changePlayer = () => {
@@ -75,45 +80,61 @@ const updatescore = () => {
   }
 };
 
-const isWinner = (size) => {
-  let aux=size;
-  for (let i = 0; i < (size*size); i=i+size) {
-    for (let j = i; j < aux-1; j++) {
-      if(tiles[j].innerHTML != tiles[j+1].innerHTML ){
-        console.log(j+" Brokes1");
+const handleHorizontalsResult = ()=>{
+  let i;
+  let j;
+  for (i = 0; i < tam; i++) {
+    for (j = 0; j < tam-1; j++) {
+      if(matrix[i][j]!=matrix[i][j+1]){
         break;
       }
-      else{
-        if(tiles[j].innerHTML===""){
-          console.log("brokes2");
-          break;
-        }
-      }
-      if(j===(aux-2)){
-        return true
+      else if(matrix[i][j]===""){
+        j--;
+        break;
       }
     }
-    aux=aux+size;
+    if(j===tam-1){
+      return true;
+    }
+  }
+  return false;
+}
+
+const handleVerticalsResult = ()=>{
+  let i;
+  let j;
+  for (i = 0; i < tam; i++) {
+    for (j = 0; j < tam-1; j++) {
+      if(matrix[j][i]!=matrix[j+1][i]){
+        break;
+      }
+      else if(matrix[j][i]===""){
+        j--;
+        break;
+      }
+    }
+    if(j===tam-1){
+      return true;
+    }
+  }
+  return false;
+}
+
+const isWinner = (size) => {
+  if(handleHorizontalsResult()){
+    return true;
+  }
+  else if(handleVerticalsResult()){
+    return true
   }
   return false;
 };
 
+
+
 function validateResult() {
   let won = isWinner(tam);
   console.log(won);
-  // for (let elem of winningComb) {
-  //   let a = board[elem[0]];
-  //   let b = board[elem[1]];
-  //   let c = board[elem[2]];
-  //   if (a === b && b === c) {
-  //     if (a === "" || b === "" || c === "") {
-  //       won = false;
-  //     } else {
-  //       won = true;
-  //       break;
-  //     }
-  //   }
-  // }
   if (won) {
     winner.classList.add(`player${currentPlayer}`);
     winner.innerHTML = "Player " + currentPlayer + " has won";
@@ -136,7 +157,22 @@ function setMatrix(size) {
       tile.addEventListener("click", () => userAction(tile, index));
     });
     tam=size;
+    assignMatrix(size);
   }
+}
+
+function assignMatrix(size) {
+  let aux = new Array(size);
+  for (let i = 0; i < aux.length; i++) {
+    aux[i] = [];
+
+  }
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      aux[i][j] = "";
+    }
+  }
+  matrix = aux;
 }
 
 function setBoardStyles(size) {
@@ -151,11 +187,26 @@ function setBoardStyles(size) {
 }
 
 function userAction(tile, index) {
+  let count=0;
+  let j;
   if (isEmpty(tile) && !hasEnded) {
     tile.classList.remove(`player${currentPlayer}`);
     tile.classList.add(`player${currentPlayer}`);
     tile.innerText = currentPlayer;
-    board[index] = currentPlayer;
+    for (let i = 0; i < tam; i++) {
+      for (j = 0; j < tam; j++) {
+        if(count===index){
+          matrix[i][j]=currentPlayer;
+          break;
+        }
+        else{
+          count++;
+        }
+      }
+      if(count===index && j!=tam){
+        break;
+      }
+    }
     validateResult();
     changePlayer();
   }

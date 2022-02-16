@@ -120,15 +120,16 @@ input{
   border-radius: 4px;
   font-size: 16px;
   background-color: white;
-  padding:2% 2% 2% 2%;
+  padding:5px 5px 5px 5px;
   text-align: center;
   color: #5A0998;
   font-weight: bold;
   margin-right: 1%;
+  
 }
 
 #start{
-    padding: 2% 2%;
+    padding: 5px 5px;
     text-align: center;
     font-size: 14px;
     background-color: #13AF35;
