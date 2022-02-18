@@ -120,6 +120,40 @@ const handleVerticalsResult = ()=>{
   return false;
 }
 
+const handleDiagonalResults=()=>{
+  let i=0;
+  let j=tam-1;
+  for (let k = 0; k < tam; k++) {
+    if(matrix[i][i]!=""){
+      if(matrix[i][i]===matrix[i+1][i+1]){
+        if(i+1 === tam-1){
+          return true
+        }
+      }
+    }
+    else{
+      break;
+    }
+    i++;
+  }
+  i=0;
+  for (let k = 0; k < tam; k++) {
+    if(matrix[i][j]!=""){
+      if(matrix[i][j]===matrix[i+1][j-1]){
+        if(i+1 === tam-1){
+          return true
+        }
+      }
+    }
+    else{
+      break;
+    }
+    i++;
+    j--;
+  }
+  return false;
+}
+
 const isWinner = (size) => {
   if(handleHorizontalsResult()){
     return true;
@@ -127,10 +161,11 @@ const isWinner = (size) => {
   else if(handleVerticalsResult()){
     return true
   }
+  else if(handleDiagonalResults()){
+    return true;
+  }
   return false;
 };
-
-
 
 function validateResult() {
   let won = isWinner(tam);
